@@ -46,34 +46,26 @@ def reading(path):
 
 
 #=====================================================================
-def dfs(v, p=-1):
+def dfs(v, p=-1):# v - вершина; p - предок
     global timer
-    used[v] = True
-    tin[v] = timer
-    timer += 1
-    tup[v] = tin[v]
-    for to in adj_list[v]:
-        if to == p:  continue
-        if (used[to]):
-            tup[v] = min(tup[v], tin[to])
+    used[v] = True # used[v] - запоминание посещенных вершин
+    tin[v] = timer # tin[v] - время входа в вершину 
+    timer += 1 # переменная времени(увеличивается при спуске)
+    tup[v] = tin[v] # tup[v] - время минимального подъема
+    for to in adj_list[v]: # adj_list[v] - матрица связи вершин
+        if to == p:  continue # to - индекс вершин, по которым происходит обход
+        if (used[to]):# если побывали в вершине
+            tup[v] = min(tup[v], tin[to]) # обновление tup, так как вершина уже посещена 
         else:
             dfs(to, v)
             tup[v] = min(tup[v], tup[to])
-            if tup[to] > tin[v]:
+            if tup[to] > tin[v]: # проверка на мост 
                 print('Мост находится в точках:',to + 1, v + 1)
-            if tup[to] >= tin[v] and p != -1:
-                # print('Точка сочленения:',v + 1)
+            if tup[to] >= tin[v] and p != -1: # проверка на точку сочленения 
                 dots.append(v + 1)
-    if (p == -1) and len(dots) > 0:
-        dots.append(v + 1)
+    """ if (p == -1) and len(dots) > 0:
+        dots.append(v + 1) # dots - массив точек сочленения  """
 #=====================================================================
-
-
-"""
-tin[v] - время входа в вершину v
-
-tup[v] - минимально достижимая вершина из вершины 
-"""
 
 
 input_path = ''
@@ -103,12 +95,7 @@ while (input_path != 'e') or (input_path != 'у'):
             adj_list.append(b) 
         dfs(random.randint( 0, len(mat[0]) ))
         dots = sorted(dots)
-        print('Точки сочленения:',*dots)
+        print('Точки сочленения:',*set(dots))
     else:
         print('Граф ориентированный!')
     
-
-
-
-
-
