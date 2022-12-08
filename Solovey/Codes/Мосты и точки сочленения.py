@@ -98,4 +98,5 @@ while (input_path != 'e') or (input_path != 'у'):
         print('Точки сочленения:',*set(dots))
     else:
         print('Граф ориентированный!')
-    
+
+print()
